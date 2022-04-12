@@ -1,0 +1,19 @@
+---
+title: "US Capitals"
+author: "Narayan Vudumula"
+date: "12/04/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(leaflet)
+download.file(url="https://gist.github.com/sjengle/5315515/raw/2c636f8e0d3008529a1a0b66a9b2b93acde6d1b1/us-capitals.csv", destfile = "us-capitaldata.csv")
+capitals <- read.csv("us-capitaldata.csv")
+```
+
+```{r mapData}
+mapData <- data.frame(lat=capitals$latitude, lng=capitals$longitude, popup=capitals$capital)
+my_map <- leaflet() %>% addTiles() %>% addMarkers(lng=mapData$lng, lat=mapData$lat, popup=mapData$popup)
+my_map
+```
